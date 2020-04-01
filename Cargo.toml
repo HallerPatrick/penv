@@ -10,3 +10,4 @@ edition = "2018"
 ansi_term = "0.12"
 prettytable-rs = "^0.8"
 clap = "2.33.0"
+

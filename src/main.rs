@@ -20,18 +20,14 @@ fn main() {
 
 
     let var_name: String;
+
     if let Some(var_name_arg) = matches.value_of("name") {
         var_name = var_name_arg.to_string();
     } else {
         var_name = String::from("PATH");
     }
 
-    let mut path_values: Option<String> = None;
-    for (key, value) in env::vars() {
-        if key.trim() == var_name.to_uppercase() {
-            path_values = Some(value.clone());
-        }
-    }
+    let path_values = get_path_values(&var_name);
 
     match path_values {
         Some(paths_string) => {
@@ -39,7 +35,7 @@ fn main() {
 
             let mut table = Table::new();
 
-            println!("\n{}", Blue.paint(format!("ENVIRONMENT VARIABLE: {}", Blue.bold().paint(var_name))));
+            println!("\n{}", Blue.paint(format!("ENVIRONMENT VARIABLE: {}", Blue.bold().paint(var_name.to_uppercase()))));
 
             for (i, path) in paths.enumerate() {
                 table.add_row(row![Green.bold().paint((i+1).to_string()), path]);
@@ -50,5 +46,33 @@ fn main() {
         }
 
         None => eprintln!("Could not find path variable")
+    }
+}
+
+
+fn get_path_values(var_name: &String) -> Option<String> {
+
+    let mut path_values: Option<String> = None;
+
+    for (key, value) in env::vars() {
+        if key.trim() == var_name.clone().to_uppercase() {
+            path_values = Some(value.clone());
+        }
+    }
+
+    path_values
+}
+
+
+#[cfg(test)]
+mod tests {
+
+    #[test]
+    fn test_filter_target_var() {
+        assert_eq!(1, 1);
+    }
+
+    #[test]
+    fn test_path_split() {
     }
 }

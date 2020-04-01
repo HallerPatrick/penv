@@ -36,6 +36,7 @@ ARGS:
 
 ### TODO
 
+- [ ] List all envs
 - [ ] Cross-platform
 - [ ] add to crates.io
 - [ ] Adding, Editing & Removing of paths??
